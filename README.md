@@ -1,5 +1,5 @@
 # discord-emoji
-The bot for Discord Emoji
+The bot for Discord Emoji, written in Discord.js
 
 
 The server for Discord Emoji is here: https://discord.gg/q35ynfd
