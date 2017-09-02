@@ -1,7 +1,7 @@
 const bot = require('discord.js')
 
 const shard = new bot.ShardingManager('./discordemoji.js', {
-    token: "MzM2MDU4ODUzNDAzNzg3Mjc1.DIiUCg.AY46GIKy2ixaTFSlxAiQQYTjlfc" 
+    token: "Nope" 
 })
 
 shard.spawn(2);
