@@ -1,14 +1,12 @@
-const bot = require('discord.js')
+const { ShardingManager } = require('discord.js');
+const shard = new ShardingManager('./discordemoji.js', {
+  token: 'nope',
+  autoSpawn: true
+});
 
-const shard = new bot.ShardingManager('./discordemoji.js', {
-    token: "Nope" 
-})
+shard.spawn(); // Spawns recommended shards!
 
-shard.spawn(2);
-
-shard.on('launch', shard => {
-    console.log(`Shard ${shard.id} is alive`)
-})
+shard.on('launch', shard => console.log(`[SHARD] Shard ${shard.id}/${shard.totalShards}`));
 
 /*
 Credit to Melmsie and August
