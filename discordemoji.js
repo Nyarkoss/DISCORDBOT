@@ -124,7 +124,7 @@ bot.on("message", msg => {
 
     if (cmd == "invite") {
         msg.channel.send(`Invite link coming to your DMs. :mailbox_with_mail:`)
-        msg.author.send('Invite the bot here! https://discordapp.com/oauth2/authorizde!client_id=336058853403787275&scope=bot')
+        msg.author.send('Invite the bot here! https://discordapp.com/oauth2/authorize?client_id=336058853403787275&scope=bot&permissions=19456')
     }
 
     if (cmd == "eval" && msg.author.id === "252001272146821120" || cmd == "eval" && msg.author.id === "145557815287611393") {
