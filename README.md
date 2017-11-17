@@ -1,4 +1,5 @@
 # discord-emoji
+[![Discord Bots](https://discordbots.org/api/widget/336058853403787275.png)](https://discordbots.org/bot/336058853403787275?utm_source=widget)
 The bot for Discord Emoji, written in Discord.js
 
 
