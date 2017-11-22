@@ -156,4 +156,4 @@ bot.on("message", msg => {
     }
 });
 
-bot.login('')
+bot.login('nope')
