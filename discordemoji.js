@@ -1,6 +1,12 @@
 const Discord = require("discord.js")
 const chancejs = require("chance");
 const chance = new chancejs();
+const emojifyText = require("emojify-text")
+const emojify = emojifyText({
+  background: '⚪',
+  foreground: '⚫',
+  row: true
+})
 const snekfetch = require('snekfetch')
 const bot = new Discord.Client()
 
@@ -9,7 +15,7 @@ bot.on("ready", () => {
     const guildsizes = result.reduce((prev, val) => prev + val, 0)
     snekfetch.post(`https://discordbots.org/api/bots/336058853403787275/stats`)
         .set('Authorization', '')
-        .send({ server_count: guildsizes, shard_count: 2 })
+        .send({ server_count: guildsizes, shard_count: 3 })
         .then(console.log('Updated discordbots.org status.'))
         .catch(e => console.log(e.body))
     })
@@ -17,7 +23,7 @@ bot.shard.fetchClientValues('guilds.size').then(result => {
    const guildsizes = result.reduce((prev, val) => prev + val, 0)
    snekfetch.post(`https://bots.discord.pw/api/bots/336058853403787275/stats`)
        .set('Authorization', '')
-       .send({ server_count: guildsizes, shard_count: 2 })
+       .send({ server_count: guildsizes, shard_count: 3 })
        .then(console.log('Updated bots.discord.pw status.'))
        .catch(e => console.log(e.body))
 })
@@ -41,7 +47,7 @@ bot.on("guildCreate", guild => {
     const guildsizes = result.reduce((prev, val) => prev + val, 0)
     snekfetch.post(`https://discordbots.org/api/bots/336058853403787275/stats`)
         .set('Authorization', '')
-        .send({ server_count: guildsizes, shard_count: 2})
+        .send({ server_count: guildsizes, shard_count: 3})
         .then(console.log('Updated discordbots.org status.'))
         .catch(e => console.log(e.body))
     })
@@ -49,7 +55,7 @@ bot.shard.fetchClientValues('guilds.size').then(result => {
    const guildsizes = result.reduce((prev, val) => prev + val, 0)
    snekfetch.post(`https://bots.discord.pw/api/bots/336058853403787275/stats`)
        .set('Authorization', '')
-       .send({ server_count: guildsizes, shard_count: 2  })
+       .send({ server_count: guildsizes, shard_count: 3  })
        .then(console.log('Updated bots.discord.pw status.'))
        .catch(e => console.log(e.body))
 })
@@ -60,7 +66,7 @@ bot.on("guildDelete", guild => {
     const guildsizes = result.reduce((prev, val) => prev + val, 0)
     snekfetch.post(`https://discordbots.org/api/bots/336058853403787275/stats`)
         .set('Authorization', '')
-        .send({ server_count: guildsizes, shard_count: 2 })
+        .send({ server_count: guildsizes, shard_count: 3 })
         .then(console.log('Updated discordbots.org status.'))
         .catch(e => console.log(e.body))
     })
@@ -68,7 +74,7 @@ bot.shard.fetchClientValues('guilds.size').then(result => {
    const guildsizes = result.reduce((prev, val) => prev + val, 0)
    snekfetch.post(`https://bots.discord.pw/api/bots/336058853403787275/stats`)
        .set('Authorization', '')
-       .send({ server_count: guildsizes, shard_count: 2  })
+       .send({ server_count: guildsizes, shard_count: 3  })
        .then(console.log('Updated bots.discord.pw status.'))
        .catch(e => console.log(e.body))
 })
@@ -94,6 +100,13 @@ bot.on("message", msg => {
     if (cmd == "hello") {
         msg.channel.send(`Hello there! I am a bot that will help you get some cool emojis and play emoji games! Also, I do stuff. :smile:`)
     }
+    
+    if (cmd == "emojify") {
+        let message = args.slice(0).join(" ")
+        if (!args[0]) { return msg.channel.send(":x: You can't convert nothing :^)") }
+        msg.channel.send(emojify(message))
+
+    }
 
     if (cmd == "getstarted") {
         msg.channel.send(`Ready to get started? Awesome!\n*Quick note: You need Discord Nitro to get the best experience out of this bot/server*\nTo get started, follow these steps:\n:one: - Join the Discord Emoji server: https://discord.gg/HJmmmTB\n:two: - Read the #emojis channel for all of usable emojis\n:three: - Have fun! :smile:`)
@@ -105,7 +118,7 @@ bot.on("message", msg => {
             .setTitle("Help")
             .setColor("#16a085")
             .setAuthor("Discord Emoji Commands")
-            .setDescription("__**General**__\n**de!hello** - Hello there!\n**de!stats** - Find out the stats!\n**de!invite** - Invite the bot to your server!\n__**Emoji Stuff**__\n**de!emojilist** - Tells you alll the emoji's that are in the server!\n**de!emojiurl-emoji** - Get the URL for emojis! (Replace the emoji at the end with the name of the emoji you want the url for)\n__**Discord Emoji Server Stuff**__\n**de!getstarted** - Get started with Discord Emojis!\n**de!server** - Get a link to the server!\n__**Games**__\n**de!emojiflip** - Flip an emoji!")
+            .setDescription("__**General**__\n**de!hello** - Hello there!\n**de!stats** - Find out the stats!\n**de!invite** - Invite the bot to your server!\n__**Emoji Stuff**__\n**de!emojilist** - Tells you alll the emoji's that are in the server!\n**de!emojiurl-emoji** - Get the URL for emojis! (Replace the emoji at the end with the name of the emoji you want the url for)\n__**Discord Emoji Server Stuff**__\n**de!getstarted** - Get started with Discord Emojis!\n**de!server** - Get a link to the server!\n__**Games and Stuff**__\n**de!emojiflip** - Flip an emoji!\n**de!emojify (message)** - Turns your message into emojis!")
         )
 
         msg.channel.send("Check your DMs. :mailbox_with_mail:")
@@ -148,7 +161,7 @@ bot.on("message", msg => {
     }
     
     if (cmd.startsWith('emojiurl-')) {
-        try {
+         try {
             msg.channel.send(`https://cdn.discordapp.com/emojis/${bot.emojis.find('name', cmd.replace('emojiurl-', '')).id}.png`)
         } catch (e) {
             msg.channel.send(`The emoji \`${cmd.replace('emojiurl-', '')}\` was not found!`)
@@ -156,4 +169,4 @@ bot.on("message", msg => {
     }
 });
 
-bot.login('nope')
+bot.login('')
